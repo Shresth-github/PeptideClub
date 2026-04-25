@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PEPTIDE CLUB - Order Tracking</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            background-color: #08090D;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.279) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            background-attachment: fixed;
+        }
+
+        .glass-panel {
+            background: rgba(13, 16, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-panel:hover {
+            border: 1px solid rgba(9, 160, 211, 0.3);
+        }
+
+        .btn-3d {
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 0 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-3d.active {
+            box-shadow: 0 0px 0 0 rgba(173, 216, 230, 0.5);
+            transform: translateY(4px);
+            background: rgba(173, 216, 230, 0.15);
+            border-color: rgba(173, 216, 230, 0.8);
+            color: rgba(173, 216, 230, 1);
+        }
+
+        .btn-3d:not(.active):hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-3d:not(.active):active {
+            box-shadow: 0 0px 0 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(4px);
+        }
+
+        input {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: rgba(173, 216, 230, 0.5) !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 0 15px rgba(173, 216, 230, 0.1) !important;
+            outline: none !important;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#add8e6",
+                        "on-background": "#e2e2e3",
+                        "outline-variant": "#41484a",
+                        "surface-variant": "#333536",
+                    },
+                    "fontFamily": {
+                        "body-main": ["IBM Plex Sans"],
+                        "nav-link": ["Space Mono"],
+                        "hero-h1": ["Bebas Neue"],
+                        "label-mono": ["Space Mono"],
+                        "button-text": ["Space Mono"]
+                    },
+                    "spacing": {
+                        "header-height": "80px",
+                        "section-padding": "96px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "grid-unit": "24px",
+                    },
+                    "fontSize": {
+                        "body-main": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "nav-link": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "hero-h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "normal", "fontWeight": "400" }],
+                        "label-mono": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "button-text": ["13px", { "lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="text-on-background font-body-main antialiased min-h-screen flex flex-col">
+    <!-- Master Navigation Bar -->
+    <script src="navbar.js"></script>
+
+    <main class="flex-grow pt-header-height flex flex-col">
+        <section
+            class="py-section-padding px-margin-mobile md:px-margin-desktop relative z-10 flex-grow flex flex-col justify-center">
+            <div class="max-w-screen-md mx-auto w-full">
+                <!-- Title & Subtitle -->
+                <div class="text-center mb-12">
+                    <div class="glass-panel px-4 py-2 inline-flex items-center gap-2 mb-6 rounded-sm">
+                        <span class="material-symbols-outlined text-[16px] text-primary-container">local_shipping</span>
+                        <span class="font-label-mono text-[11px] text-primary-container">LOGISTICS PORTAL</span>
+                    </div>
+                    <h1 class="font-hero-h1 text-[64px] text-white leading-none mb-4 uppercase">Track Your Order</h1>
+                    <p class="font-body-main text-outline-variant max-w-lg mx-auto">
+                        Monitor the status of your research peptide shipment in real-time. Please select your tracking
+                        method and enter the corresponding details below.
+                    </p>
+                </div>
+
+                <!-- Tracking Form -->
+                <div class="glass-panel p-8 md:p-12 relative overflow-hidden">
+                    <form id="trackingForm" class="flex flex-col gap-8 relative z-10">
+
+                        <!-- 3D Selector Buttons -->
+                        <div class="flex gap-4 w-full mb-2">
+                            <button type="button" id="btn-awb"
+                                class="btn-3d active flex-1 py-4 font-label-mono text-[12px] text-white tracking-widest uppercase rounded-sm"
+                                onclick="setTrackingMethod('awb')">
+                                AWB Number
+                            </button>
+                            <button type="button" id="btn-order"
+                                class="btn-3d flex-1 py-4 font-label-mono text-[12px] text-white tracking-widest uppercase rounded-sm"
+                                onclick="setTrackingMethod('order')">
+                                Order ID
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Input Field -->
+                        <div class="flex flex-col gap-3">
+                            <label id="input-label"
+                                class="font-label-mono text-[11px] text-white/60 uppercase tracking-widest flex items-center gap-2">
+                                Enter AWB Number
+                                <span class="material-symbols-outlined text-[14px]">tag</span>
+                            </label>
+                            <input type="text" id="tracking-input" placeholder="e.g. 1234567890"
+                                class="px-5 py-4 rounded-none font-mono text-lg tracking-wider" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="bg-primary-container text-[#08090D] font-button-text text-[14px] py-4 mt-2 hover:bg-white transition-colors flex items-center justify-center gap-2 uppercase tracking-widest font-bold w-full rounded-sm">
+                            Locate Shipment
+                            <span class="material-symbols-outlined text-[20px]">search</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Master Footer -->
+    <script src="footer.js"></script>
+
+    <!-- Logic Script -->
+    <script>
+        function setTrackingMethod(method) {
+            const btnAwb = document.getElementById('btn-awb');
+            const btnOrder = document.getElementById('btn-order');
+            const inputLabel = document.getElementById('input-label');
+            const trackingInput = document.getElementById('tracking-input');
+
+            if (method === 'awb') {
+                btnAwb.classList.add('active');
+                btnOrder.classList.remove('active');
+                inputLabel.innerHTML = 'Enter AWB Number <span class="material-symbols-outlined text-[14px]">tag</span>';
+                trackingInput.placeholder = 'e.g. 123456789012';
+            } else {
+                btnOrder.classList.add('active');
+                btnAwb.classList.remove('active');
+                inputLabel.innerHTML = 'Enter Order ID <span class="material-symbols-outlined text-[14px]">receipt_long</span>';
+                trackingInput.placeholder = 'e.g. ORD-98765432';
+            }
+            trackingInput.value = ''; // clear input on switch
+            trackingInput.focus();
+        }
+
+        // Prevent default submission for visual demo
+        document.getElementById('trackingForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Searching... <span class="material-symbols-outlined text-[20px] animate-spin">refresh</span>';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                alert("Order tracking backend not yet connected.");
+            }, 1500);
+        });
+    </script>
+</body>
+
+</html>

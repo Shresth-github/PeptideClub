@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PEPTIDE CLUB - Advanced Biotech</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            background-color: #08090D;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.279) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            background-attachment: fixed;
+        }
+
+        .glass-panel {
+            background: rgba(13, 16, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.475);
+        }
+
+        .glass-panel-active,
+        .glass-panel:hover {
+            border: 1px solid rgba(9, 160, 211, 0.3);
+        }
+
+        .purity-badge {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: default;
+        }
+
+        .purity-badge:hover {
+            border-color: rgba(9, 160, 211, 0.5);
+            background: rgba(9, 160, 211, 0.08);
+            box-shadow: 0 0 20px rgba(9, 160, 211, 0.15), 0 0 40px rgba(9, 160, 211, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .purity-badge:hover .purity-dot {
+            box-shadow: 0 0 12px rgba(173, 216, 230, 1), 0 0 24px rgba(173, 216, 230, 0.5);
+        }
+
+        .purity-dot {
+            transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .float-vial {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#2f3131",
+                        "tertiary-fixed-dim": "#efbc94",
+                        "on-error": "#690005",
+                        "surface": "#121414",
+                        "on-primary-fixed": "#001f27",
+                        "on-primary-container": "#355f6b",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#121c2a",
+                        "on-background": "#e2e2e3",
+                        "surface-container": "#1e2021",
+                        "tertiary-container": "#fbc79e",
+                        "secondary-fixed-dim": "#bdc7da",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffdcc2",
+                        "inverse-surface": "#e2e2e3",
+                        "outline": "#8b9295",
+                        "tertiary": "#ffeadb",
+                        "background": "#121414",
+                        "primary-fixed-dim": "#a3cddb",
+                        "on-secondary": "#273140",
+                        "outline-variant": "#41484a",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed": "#2e1500",
+                        "on-secondary-container": "#acb6c8",
+                        "primary-fixed": "#beeaf8",
+                        "on-tertiary-container": "#775131",
+                        "secondary": "#bdc7da",
+                        "surface-dim": "#121414",
+                        "surface-container-lowest": "#0c0f0f",
+                        "on-tertiary": "#48290c",
+                        "on-secondary-fixed-variant": "#3d4757",
+                        "surface-container-low": "#1a1c1d",
+                        "on-surface-variant": "#c0c8cb",
+                        "surface-container-highest": "#333536",
+                        "surface-variant": "#333536",
+                        "secondary-container": "#3d4757",
+                        "primary-container": "#add8e6",
+                        "surface-container-high": "#282a2b",
+                        "on-primary-fixed-variant": "#214c58",
+                        "on-primary": "#023641",
+                        "primary": "#d0f3ff",
+                        "surface-tint": "#a3cddb",
+                        "on-tertiary-fixed-variant": "#623f20",
+                        "secondary-fixed": "#d9e3f7",
+                        "on-surface": "#e2e2e3",
+                        "inverse-primary": "#3a6470",
+                        "surface-bright": "#37393a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-unit": "24px",
+                        "section-padding": "96px",
+                        "header-height": "80px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px"
+                    },
+                    "fontFamily": {
+                        "body-main": ["IBM Plex Sans"],
+                        "nav-link": ["Space Mono"],
+                        "hero-h1": ["Bebas Neue"],
+                        "label-mono": ["Space Mono"],
+                        "button-text": ["Space Mono"]
+                    },
+                    "fontSize": {
+                        "body-main": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "nav-link": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "hero-h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "normal", "fontWeight": "400" }],
+                        "label-mono": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "button-text": ["13px", { "lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="text-on-background font-body-main antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
+    <!-- Master Navigation Bar -->
+    <script src="navbar.js"></script>
+    <!-- NavigationDrawer (Mobile Hidden by default, representing the structure) -->
+    <aside
+        class="hidden fixed left-0 top-20 h-[calc(100vh-80px)] z-40 bg-[#08090D] border-r border-white/10 rounded-none w-80">
+        <div class="p-6 border-b border-white/10">
+            <h2 class="font-hero-h1 text-2xl text-primary-container tracking-tighter">SYSTEM MENU</h2>
+        </div>
+        <nav class="flex flex-col py-4">
+            <a class="flex items-center gap-4 px-6 py-4 bg-sky-200/10 text-primary-container border-l-4 border-primary-container transition-colors duration-200 ease-in-out"
+                href="#">
+                <span class="material-symbols-outlined">home</span>
+                <span class="font-nav-link text-nav-link uppercase tracking-tighter">HOME</span>
+            </a>
+            <a class="flex items-center gap-4 px-6 py-4 text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors duration-200 ease-in-out border-l-4 border-transparent"
+                href="#">
+                <span class="material-symbols-outlined">biotech</span>
+                <span class="font-nav-link text-nav-link uppercase tracking-tighter">RESEARCH PRODUCTS</span>
+            </a>
+            <a class="flex items-center gap-4 px-6 py-4 text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors duration-200 ease-in-out border-l-4 border-transparent"
+                href="#">
+                <span class="material-symbols-outlined">query_stats</span>
+                <span class="font-nav-link text-nav-link uppercase tracking-tighter">PURITY ANALYSIS</span>
+            </a>
+        </nav>
+    </aside>
+    <main class="flex-grow pt-header-height flex flex-col">
+        <!-- Hero Section -->
+        <section
+            class="min-h-[707px] flex items-center relative overflow-hidden px-margin-mobile md:px-margin-desktop py-section-padding">
+            <!-- Decorative background element -->
+            <div class="absolute inset-0 z-0 flex items-center justify-center opacity-20 pointer-events-none">
+                <div
+                    class="w-[800px] h-[800px] rounded-full border border-primary-container/30 border-dashed animate-[spin_120s_linear_infinite]">
+                </div>
+                <div
+                    class="absolute w-[600px] h-[600px] rounded-full border border-primary-container/20 border-dashed animate-[spin_90s_linear_infinite_reverse]">
+                </div>
+            </div>
+            <!-- Hero Image (right side, blended) -->
+            <div
+                class="absolute right-[5%] top-1/2 -translate-y-1/2 w-[40%] h-[600px] z-[1] pointer-events-none hidden md:block">
+                <div class="w-full h-full">
+                    <img src="hero-vial3.png" alt="Research peptide vial"
+                        class="w-full h-full object-contain object-center opacity-100 float-vial"
+                        style="filter: brightness(0.85) contrast(1.1);">
+                </div>
+            </div>
+            <div
+                class="relative z-10 max-w-screen-xl mx-auto w-full flex flex-col items-start justify-center text-left">
+                <div class="flex flex-col items-start gap-8 max-w-xl">
+                    <div class="purity-badge glass-panel px-4 py-2 inline-flex items-center gap-2 mb-4">
+                        <span
+                            class="purity-dot w-2 h-2 bg-primary-container shadow-[0_0_8px_rgba(173,216,230,0.8)]"></span>
+                        <span class="font-label-mono text-label-mono text-primary-container">PHARMACEUTICAL
+                            GRADE PURITY</span>
+                    </div>
+                    <h1 class="font-hero-h1 text-hero-h1 text-white m-0 leading-[1.15]">
+                        ADVANCED BIOTECH<br>
+                        <span class="text-surface-variant">RESEARCH</span>
+                    </h1>
+                    <p class="font-body-main text-body-main text-outline-variant max-w-lg">
+                        Laboratory grade research only. Providing high-purity peptides for in-vitro diagnostics and
+                        analytical testing environments. Precision guaranteed.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-6 mt-4">
+                        <button
+                            class="bg-primary-container text-[#000000] font-button-text text-button-text px-8 py-4 hover:bg-primary-fixed transition-colors flex items-center gap-2">
+                            SHOP PRODUCTS
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
+                        <button
+                            class="bg-transparent border border-primary-container text-primary-container font-button-text text-button-text px-8 py-4 hover:bg-primary-container/10 transition-colors flex items-center gap-2">
+                            VIEW ANALYSIS
+                            <span class="material-symbols-outlined text-[18px]">analytics</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Featured Products -->
+        <section
+            class="py-section-padding px-margin-mobile md:px-margin-desktop bg-[#08090D] relative z-10 border-t border-white/5">
+            <div class="max-w-screen-2xl mx-auto w-full">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div>
+                        <h2 class="font-hero-h1 text-[48px] text-white leading-none mb-4">FEATURED RESEARCH
+                        </h2>
+                        <p class="font-label-mono text-label-mono text-outline-variant">LATEST PURITY BATCHES
+                            AVAILABLE</p>
+                    </div>
+                    <button
+                        class="bg-transparent border border-white/20 text-white font-button-text text-button-text px-6 py-3 hover:border-primary-container hover:text-primary-container transition-colors flex items-center gap-2">
+                        VIEW ALL CATALOG
+                    </button>
+                </div>
+                <!-- Bento Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-grid-unit">
+                    <!-- Card 1 -->
+                    <div class="glass-panel group transition-colors duration-300 flex flex-col h-full">
+                        <div class="p-6 border-b border-white/5 flex justify-between items-start">
+                            <div
+                                class="font-label-mono text-label-mono text-primary-container px-2 py-1 border border-primary-container/30 bg-primary-container/5 inline-block">
+                                99.9% PURITY
+                            </div>
+                            <span
+                                class="material-symbols-outlined text-outline-variant group-hover:text-primary-container transition-colors">biotech</span>
+                        </div>
+                        <div class="p-8 flex-grow flex flex-col justify-between gap-8">
+                            <div>
+                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">BPC-157</h3>
+                                <p class="font-body-main text-body-main text-outline-variant line-clamp-2">Body
+                                    Protection Compound 157. Lyophilized powder for research purposes.</p>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="font-nav-link text-[16px] text-white">$45.00</span>
+                                <button class="text-primary-container hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="glass-panel group transition-colors duration-300 flex flex-col h-full">
+                        <div class="p-6 border-b border-white/5 flex justify-between items-start">
+                            <div
+                                class="font-label-mono text-label-mono text-primary-container px-2 py-1 border border-primary-container/30 bg-primary-container/5 inline-block">
+                                99.8% PURITY
+                            </div>
+                            <span
+                                class="material-symbols-outlined text-outline-variant group-hover:text-primary-container transition-colors">science</span>
+                        </div>
+                        <div class="p-8 flex-grow flex flex-col justify-between gap-8">
+                            <div>
+                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">TB-500</h3>
+                                <p class="font-body-main text-body-main text-outline-variant line-clamp-2">
+                                    Thymosin Beta-4 synthetic analog. Analyzed via HPLC for precision.</p>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="font-nav-link text-[16px] text-white">$55.00</span>
+                                <button class="text-primary-container hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="glass-panel group transition-colors duration-300 flex flex-col h-full">
+                        <div class="p-6 border-b border-white/5 flex justify-between items-start">
+                            <div
+                                class="font-label-mono text-label-mono text-[#000000] bg-primary-container px-2 py-1 inline-block font-bold">
+                                IN STOCK
+                            </div>
+                            <span
+                                class="material-symbols-outlined text-outline-variant group-hover:text-primary-container transition-colors">experiment</span>
+                        </div>
+                        <div class="p-8 flex-grow flex flex-col justify-between gap-8">
+                            <div>
+                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">CJC-1295</h3>
+                                <p class="font-body-main text-body-main text-outline-variant line-clamp-2">
+                                    Without DAC. Advanced sequence for comprehensive testing protocols.</p>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="font-nav-link text-[16px] text-white">$42.00</span>
+                                <button class="text-primary-container hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Master Footer -->
+    <script src="footer.js"></script>
+</body>
+
+</html>

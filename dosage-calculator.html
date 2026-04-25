@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PEPTIDE CLUB - Dosage Calculator</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body {
+            background-color: #08090D;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.279) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(13, 16, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .glass-panel:hover { border: 1px solid rgba(9, 160, 211, 0.3); }
+
+        .btn-3d {
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 0 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .btn-3d.active {
+            box-shadow: 0 0px 0 0 rgba(173, 216, 230, 0.5);
+            transform: translateY(4px);
+            background: rgba(173, 216, 230, 0.15);
+            border-color: rgba(173, 216, 230, 0.8);
+            color: rgba(173, 216, 230, 1);
+        }
+        .btn-3d:not(.active):hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .btn-3d:not(.active):active {
+            box-shadow: 0 0px 0 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(4px);
+        }
+
+        input, select {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: rgba(173, 216, 230, 0.5) !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 0 15px rgba(173, 216, 230, 0.1) !important;
+            outline: none !important;
+        }
+        option { background: #08090D; color: white; }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#add8e6",
+                        "on-background": "#e2e2e3",
+                        "outline-variant": "#41484a",
+                        "surface-variant": "#333536",
+                    },
+                    "fontFamily": {
+                        "body-main": ["IBM Plex Sans"],
+                        "nav-link": ["Space Mono"],
+                        "hero-h1": ["Bebas Neue"],
+                        "label-mono": ["Space Mono"],
+                        "button-text": ["Space Mono"]
+                    },
+                    "spacing": {
+                        "header-height": "80px",
+                        "section-padding": "96px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "grid-unit": "24px",
+                    },
+                    "fontSize": {
+                        "body-main": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "nav-link": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "hero-h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "normal", "fontWeight": "400" }],
+                        "label-mono": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "button-text": ["13px", { "lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="text-on-background font-body-main antialiased min-h-screen flex flex-col">
+    <!-- Master Navigation Bar -->
+    <script src="navbar.js"></script>
+
+    <main class="flex-grow pt-header-height flex flex-col">
+        <section class="py-section-padding px-margin-mobile md:px-margin-desktop relative z-10 flex-grow">
+            <div class="max-w-screen-xl mx-auto w-full">
+                <!-- Title & Subtitle -->
+                <div class="text-center mb-12">
+                    <div class="glass-panel px-4 py-2 inline-flex items-center gap-2 mb-6 rounded-sm">
+                        <span class="material-symbols-outlined text-[16px] text-primary-container">calculate</span>
+                        <span class="font-label-mono text-[11px] text-primary-container">PRECISION TOOL</span>
+                    </div>
+                    <h1 class="font-hero-h1 text-[64px] text-white leading-none mb-4 uppercase">Dosage Calculator</h1>
+                    <p class="font-body-main text-outline-variant max-w-lg mx-auto">
+                        Determine the exact syringe measurement for your required peptide dose.
+                    </p>
+                </div>
+
+                <!-- Calculator Form -->
+                <div class="glass-panel p-8 md:p-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                        
+                        <!-- Left Column -->
+                        <div class="flex flex-col gap-10">
+                            <!-- Desired Dose -->
+                            <div>
+                                <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary-container text-sm">target</span>
+                                    Desired Dose
+                                </label>
+                                <div class="grid grid-cols-3 gap-3 mb-3" id="dose-group">
+                                    <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setDose(500, 'mcg', this)">500 mcg</button>
+                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setDose(1, 'mg', this)">1 mg</button>
+                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setDose(2, 'mg', this)">2 mg</button>
+                                </div>
+                                <div class="flex gap-2 w-full mt-2">
+                                    <input type="number" id="custom-dose" placeholder="Custom..." class="flex-grow px-5 py-4 font-mono text-sm tracking-wider" oninput="setCustomDose()">
+                                    <select id="custom-dose-unit" class="w-24 px-4 py-4 font-mono text-sm" onchange="setCustomDose()">
+                                        <option value="mcg">mcg</option>
+                                        <option value="mg">mg</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="flex flex-col gap-10">
+                            <!-- Peptide Vial Quantity -->
+                            <div>
+                                <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary-container text-sm">science</span>
+                                    Peptide Vial Quantity
+                                </label>
+                                <div class="grid grid-cols-3 gap-3 mb-3" id="peptide-group">
+                                    <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setPeptide(5, this)">5 mg</button>
+                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setPeptide(10, this)">10 mg</button>
+                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setPeptide(15, this)">15 mg</button>
+                                </div>
+                                <input type="number" id="custom-peptide" placeholder="Or enter custom mg..." class="w-full px-5 py-4 font-mono text-sm tracking-wider" oninput="setCustomPeptide(this.value)">
+                            </div>
+
+                            <!-- Bacteriostatic Water -->
+                            <div>
+                                <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary-container text-sm">water_drop</span>
+                                    Bacteriostatic Water Added
+                                </label>
+                                <div class="grid grid-cols-4 gap-3 mb-3" id="water-group">
+                                    <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setWater(1, this)">1 ml</button>
+                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(2, this)">2 ml</button>
+                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(3, this)">3 ml</button>
+                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(5, this)">5 ml</button>
+                                </div>
+                                <input type="number" step="0.1" id="custom-water" placeholder="Or enter custom ml..." class="w-full px-5 py-4 font-mono text-sm tracking-wider" oninput="setCustomWater(this.value)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Section -->
+                    <div class="mt-16 pt-12 border-t border-white/10 text-center">
+                        <h2 class="text-2xl md:text-3xl font-body-main text-white mb-10">
+                            To have a dose of <span id="display-dose" class="text-primary-container font-bold px-1">50 mcg</span> pull the syringe to <span id="display-units" class="text-primary-container font-bold text-4xl ml-2">1</span>
+                        </h2>
+                        
+                        <!-- Visual Syringe -->
+                        <div class="max-w-4xl mx-auto bg-[#08090D] border border-white/20 p-2 rounded-lg relative overflow-visible shadow-2xl">
+                            <!-- Syringe Body -->
+                            <div class="h-24 w-full relative overflow-hidden border-2 border-white/20 rounded-lg flex bg-gradient-to-b from-white/5 to-transparent">
+                                <!-- Liquid -->
+                                <div id="syringe-liquid" class="h-full bg-primary-container/90 transition-all duration-700 ease-in-out absolute left-0 top-0 border-r-4 border-white shadow-[0_0_20px_rgba(173,216,230,0.6)]" style="width: 1%;">
+                                    <!-- Reflection highlight -->
+                                    <div class="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/30 to-transparent"></div>
+                                </div>
+                                
+                                <!-- Ticks overlay container -->
+                                <div id="syringe-ticks" class="absolute top-0 left-0 w-full h-full pointer-events-none">
+                                    <!-- Javascript will populate this based on max units -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 text-outline-variant font-label-mono text-[10px] tracking-widest uppercase">
+                            Warning: Always double check calculations. This tool is for reference only.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Master Footer -->
+    <script src="footer.js"></script>
+
+    <script>
+        // State
+        let state = {
+            syringeMax: 100,
+            dose: 500,
+            doseUnit: 'mcg',
+            peptide: 5,
+            water: 1
+        };
+
+        function updateUI() {
+            // Formula: Units = (Desired Dose (mcg) * Water (ml)) / (Peptide (mg) * 10)
+            let doseInMcg = state.doseUnit === 'mg' ? state.dose * 1000 : state.dose;
+            let units = (doseInMcg * state.water) / (state.peptide * 10);
+            
+            // Format to 1 decimal place if needed, otherwise round
+            units = Number.isInteger(units) ? units : parseFloat(units.toFixed(1));
+
+            // Update Text
+            document.getElementById('display-dose').innerText = state.dose + " " + state.doseUnit;
+            
+            const displayUnitsEl = document.getElementById('display-units');
+            if (isNaN(units) || !isFinite(units) || units === 0) {
+                displayUnitsEl.innerText = "0";
+                displayUnitsEl.classList.add('text-red-400');
+                displayUnitsEl.classList.remove('text-primary-container');
+            } else {
+                displayUnitsEl.innerText = units;
+                displayUnitsEl.classList.remove('text-red-400');
+                displayUnitsEl.classList.add('text-primary-container');
+            }
+
+            // Update Visual Syringe
+            const liquid = document.getElementById('syringe-liquid');
+            let percentage = (units / state.syringeMax) * 100;
+            if (percentage > 100) percentage = 100; // Cap visual at max syringe volume
+            if (isNaN(percentage) || !isFinite(percentage)) percentage = 0;
+            liquid.style.width = Math.max(0, percentage) + "%";
+            
+            updateTicksColor(units);
+        }
+
+        function createTicks() {
+            const ticksContainer = document.getElementById('syringe-ticks');
+            ticksContainer.innerHTML = '';
+            
+            let step = state.syringeMax === 30 ? 1 : (state.syringeMax === 50 ? 5 : 10);
+            
+            for (let i = 0; i <= state.syringeMax; i += step) {
+                const tick = document.createElement('div');
+                let percentage = (i / state.syringeMax) * 100;
+                tick.className = "absolute top-0 flex flex-col items-center justify-end h-full z-20 tick-marker";
+                tick.dataset.value = i;
+                tick.style.left = percentage + '%';
+                tick.style.transform = 'translateX(-50%)';
+                
+                // Line
+                const isMajorTick = (i % 10 === 0);
+                const line = document.createElement('div');
+                line.className = "w-[2px] bg-white transition-colors duration-500 tick-line " + (isMajorTick ? "h-[40%]" : "h-[20%]");
+                
+                // Number
+                if (isMajorTick) {
+                    const num = document.createElement('span');
+                    num.className = "text-[12px] font-mono text-white absolute top-2 font-bold transition-colors duration-500 tick-num";
+                    num.innerText = i;
+                    tick.appendChild(num);
+                }
+                
+                tick.appendChild(line);
+                ticksContainer.appendChild(tick);
+            }
+        }
+
+        function updateTicksColor(currentUnits) {
+            document.querySelectorAll('.tick-marker').forEach(tick => {
+                const val = parseFloat(tick.dataset.value);
+                const line = tick.querySelector('.tick-line');
+                const num = tick.querySelector('.tick-num');
+                
+                // We add a tiny offset so that the tick only changes color if the liquid has *passed* its center point
+                // Wait, if it's equal to the dose, it is inside the liquid. 
+                if (val <= currentUnits) {
+                    line.classList.remove('bg-white');
+                    line.classList.add('bg-[#08090D]');
+                    if (num) {
+                        num.classList.remove('text-white');
+                        num.classList.add('text-[#08090D]');
+                    }
+                } else {
+                    line.classList.remove('bg-[#08090D]');
+                    line.classList.add('bg-white');
+                    if (num) {
+                        num.classList.remove('text-[#08090D]');
+                        num.classList.add('text-white');
+                    }
+                }
+            });
+        }
+
+        // Handlers
+        function clearActive(groupId) {
+            document.querySelectorAll('#' + groupId + ' .btn-3d').forEach(btn => btn.classList.remove('active'));
+        }
+
+        function setSyringe(val, btn) {
+            clearActive('syringe-group');
+            if (btn) btn.classList.add('active');
+            state.syringeMax = val;
+            renderTicks();
+            updateUI();
+        }
+
+        function setDose(val, unit, btn) {
+            clearActive('dose-group');
+            document.getElementById('custom-dose').value = '';
+            if (btn) btn.classList.add('active');
+            state.dose = val;
+            state.doseUnit = unit;
+            updateUI();
+        }
+
+        function setCustomDose() {
+            clearActive('dose-group');
+            const val = document.getElementById('custom-dose').value;
+            const unit = document.getElementById('custom-dose-unit').value;
+            state.dose = parseFloat(val) || 0;
+            state.doseUnit = unit;
+            updateUI();
+        }
+
+        function setPeptide(val, btn) {
+            clearActive('peptide-group');
+            document.getElementById('custom-peptide').value = '';
+            if (btn) btn.classList.add('active');
+            state.peptide = val;
+            updateUI();
+        }
+
+        function setCustomPeptide(val) {
+            clearActive('peptide-group');
+            state.peptide = parseFloat(val) || 0;
+            updateUI();
+        }
+
+        function setWater(val, btn) {
+            clearActive('water-group');
+            document.getElementById('custom-water').value = '';
+            if (btn) btn.classList.add('active');
+            state.water = val;
+            updateUI();
+        }
+
+        function setCustomWater(val) {
+            clearActive('water-group');
+            state.water = parseFloat(val) || 0;
+            updateUI();
+        }
+
+        // Initialize
+        createTicks();
+        updateUI();
+    </script>
+</body>
+</html>
