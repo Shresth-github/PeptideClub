@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PEPTIDE CLUB - Purity Analysis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body {
+            background-color: #08090D;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.279) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(13, 16, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .glass-panel:hover { border: 1px solid rgba(9, 160, 211, 0.3); }
+
+        input {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            border-color: rgba(173, 216, 230, 0.5) !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 0 15px rgba(173, 216, 230, 0.1) !important;
+            outline: none !important;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#add8e6",
+                        "on-background": "#e2e2e3",
+                        "outline-variant": "#a1a1a1",
+                        "surface-variant": "#333536",
+                    },
+                    "fontFamily": {
+                        "body-main": ["IBM Plex Sans"],
+                        "nav-link": ["Space Mono"],
+                        "hero-h1": ["Bebas Neue"],
+                        "label-mono": ["Space Mono"],
+                        "button-text": ["Space Mono"]
+                    },
+                    "spacing": {
+                        "header-height": "80px",
+                        "section-padding": "96px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                    },
+                    "fontSize": {
+                        "body-main": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "nav-link": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "hero-h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "normal", "fontWeight": "400" }],
+                        "label-mono": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "button-text": ["13px", { "lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="text-on-background font-body-main antialiased min-h-screen flex flex-col">
+    <!-- Master Navigation Bar -->
+    <script src="navbar.js"></script>
+
+    <main class="flex-grow pt-header-height flex flex-col">
+        <section class="py-section-padding px-margin-mobile md:px-margin-desktop relative z-10 flex-grow">
+            <div class="max-w-screen-md mx-auto w-full">
+                <!-- Header -->
+                <div class="text-center mb-12">
+                    <div class="glass-panel px-6 py-3 inline-flex items-center gap-3 mb-6 rounded-sm border border-primary-container/30 shadow-[0_0_20px_rgba(173,216,230,0.15)]">
+                        <span class="material-symbols-outlined text-[20px] text-primary-container">verified</span>
+                        <span class="font-hero-h1 text-[24px] text-primary-container leading-none pt-1">≥ 99% PURITY GUARANTEED</span>
+                    </div>
+                    <h1 class="font-hero-h1 text-[64px] text-white leading-none mb-4 uppercase">Third-Party Analysis</h1>
+                    <p class="font-body-main text-outline-variant max-w-lg mx-auto backdrop-blur-sm px-4 py-2 inline-block" style="background-color: rgb(8, 9, 13);">
+                        Access our comprehensive third-party testing database. Search by compound name to verify batch precision and HPLC results.
+                    </p>
+                </div>
+
+                <!-- Search Area -->
+                <div class="glass-panel p-8 md:p-12 mb-8">
+                    <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary-container text-sm">search</span>
+                        Search Compound
+                    </label>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="text" id="compound-search" placeholder="e.g. CJC-1295, BPC-157" class="flex-grow px-5 py-4 font-mono text-lg tracking-wider" onkeyup="handleCompoundSearch(event)">
+                        <button onclick="searchCompound()" class="bg-primary-container text-[#08090D] font-button-text text-[14px] px-8 py-4 sm:py-0 hover:bg-white transition-colors flex items-center justify-center gap-2 uppercase tracking-widest font-bold rounded-sm">
+                            Locate
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Area (Hidden initially) -->
+                <div id="results-area" class="hidden flex-col gap-8">
+                    <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 border-b border-white/10 pb-4">
+                        <div>
+                            <h2 class="font-hero-h1 text-[40px] text-white leading-none mb-1 uppercase" id="result-compound-name">CJC-1295</h2>
+                            <p class="font-label-mono text-primary-container text-[12px] tracking-widest">ANALYSIS REPORTS</p>
+                        </div>
+                        
+                        <!-- Batch Filter (Appears only when results are shown) -->
+                        <div class="w-full md:w-64">
+                            <label class="block font-label-mono text-white/50 mb-2 tracking-wider uppercase text-[10px] flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[12px]">filter_alt</span>
+                                Filter by Batch Number
+                            </label>
+                            <input type="text" id="batch-filter" placeholder="e.g. CJC-0324" class="w-full px-4 py-3 font-mono text-sm tracking-wider bg-transparent border border-white/20" oninput="filterBatches()">
+                        </div>
+                    </div>
+
+                    <!-- Report List -->
+                    <div id="reports-list" class="flex flex-col gap-4">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+                
+                <!-- No Results State -->
+                <div id="no-results" class="hidden text-center py-12 glass-panel">
+                    <span class="material-symbols-outlined text-[48px] text-white/20 mb-4 block">science</span>
+                    <p class="font-mono text-white/50 tracking-wider">No compound found matching that query.</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Master Footer -->
+    <script src="footer.js"></script>
+
+    <script>
+        // Dummy database of lab reports, automatically ordered by latest batch first.
+        const labReports = {
+            "RETA": [
+                { batchId: "RETA-0524", date: "May 2024", purity: "99.9%", url: "reports/reta-0524.pdf" },
+                { batchId: "RETA-0424", date: "April 2024", purity: "99.7%", url: "reports/reta-0424.pdf" },
+                { batchId: "RETA-0224", date: "February 2024", purity: "99.5%", url: "reports/reta-0224.pdf" }
+            ],
+            "CJC-1295": [
+                { batchId: "CJC-0324", date: "March 2024", purity: "99.4%", url: "#" },
+                { batchId: "CJC-0224", date: "February 2024", purity: "99.1%", url: "#" },
+                { batchId: "CJC-0124", date: "January 2024", purity: "99.6%", url: "#" }
+            ],
+            "BPC-157": [
+                { batchId: "BPC-0324", date: "March 2024", purity: "99.8%", url: "#" },
+                { batchId: "BPC-0124", date: "January 2024", purity: "99.3%", url: "#" }
+            ],
+            "TB-500": [
+                { batchId: "TB-0424", date: "April 2024", purity: "99.5%", url: "#" },
+                { batchId: "TB-0224", date: "February 2024", purity: "99.2%", url: "#" }
+            ]
+        };
+
+        let currentCompoundData = [];
+
+        function handleCompoundSearch(e) {
+            if (e.key === 'Enter') {
+                searchCompound();
+            }
+        }
+
+        function searchCompound() {
+            const query = document.getElementById('compound-search').value.trim().toUpperCase();
+            const resultsArea = document.getElementById('results-area');
+            const noResults = document.getElementById('no-results');
+            document.getElementById('batch-filter').value = ''; // Reset batch filter
+
+            if (!query) return;
+
+            // Simple exact/partial match for dummy data
+            let foundKey = null;
+            for(let key in labReports) {
+                // Remove hyphens for easier matching (e.g., matching "cjc 1295" or "cjc1295" to "CJC-1295")
+                if (key.toUpperCase().replace(/[^A-Z0-9]/g, '').includes(query.replace(/[^A-Z0-9]/g, ''))) {
+                    foundKey = key;
+                    break;
+                }
+            }
+
+            if (foundKey) {
+                currentCompoundData = labReports[foundKey];
+                document.getElementById('result-compound-name').innerText = foundKey;
+                renderReports(currentCompoundData);
+                
+                resultsArea.classList.remove('hidden');
+                resultsArea.classList.add('flex');
+                noResults.classList.add('hidden');
+            } else {
+                resultsArea.classList.add('hidden');
+                resultsArea.classList.remove('flex');
+                noResults.classList.remove('hidden');
+            }
+        }
+
+        function filterBatches() {
+            const batchQuery = document.getElementById('batch-filter').value.trim().toUpperCase();
+            
+            if (!batchQuery) {
+                renderReports(currentCompoundData);
+                return;
+            }
+
+            const filteredData = currentCompoundData.filter(report => report.batchId.toUpperCase().includes(batchQuery));
+            renderReports(filteredData);
+        }
+
+        function renderReports(data) {
+            const listContainer = document.getElementById('reports-list');
+            listContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                listContainer.innerHTML = '<div class="text-center py-8 text-white/50 font-mono text-sm border border-dashed border-white/10 rounded-sm">No batches match that filter.</div>';
+                return;
+            }
+
+            data.forEach(report => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 hover:border-primary-container/50 transition-colors group";
+                card.innerHTML = `
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-3">
+                            <span class="font-hero-h1 text-[28px] text-white leading-none pt-1">${report.batchId}</span>
+                            <span class="bg-primary-container/10 text-primary-container px-2 py-0.5 rounded-sm font-label-mono text-[10px] uppercase border border-primary-container/20 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[12px]">verified</span>
+                                Purity: ${report.purity}
+                            </span>
+                        </div>
+                        <span class="font-label-mono text-white/50 text-[11px] tracking-widest uppercase">Manufactured: ${report.date}</span>
+                    </div>
+                    <button class="bg-transparent border border-white/20 text-white font-button-text text-[12px] px-6 py-3 group-hover:bg-primary-container group-hover:text-[#08090D] group-hover:border-primary-container transition-all flex items-center gap-2 uppercase tracking-widest w-full sm:w-auto justify-center rounded-sm">
+                        View Report
+                        <span class="material-symbols-outlined text-[16px]">download</span>
+                    </button>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="text-xl text-white font-hero-h1 tracking-wider">PEPTIDE CLUB</div>
         <nav class="flex flex-wrap justify-center gap-x-8 gap-y-4 max-w-3xl mx-auto">
             <a href="index.html" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">HOME</a>
-            <a href="#" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">RESEARCH PRODUCTS</a>
-            <a href="#" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">PURITY ANALYSIS</a>
+            <a href="research-products.html" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">RESEARCH PRODUCTS</a>
+            <a href="purity-analysis.html" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">PURITY ANALYSIS</a>
             <a href="order-tracking.html" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">ORDER TRACKING</a>
             <a href="dosage-calculator.html" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">DOSAGE CALCULATOR</a>
             <a href="contact-us.html" class="footer-link text-[10px] uppercase tracking-[0.2em] text-white/30 hover:text-primary-container transition-colors">CONTACT US</a>

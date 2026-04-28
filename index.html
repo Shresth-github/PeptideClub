@@ -100,7 +100,7 @@
                         "background": "#121414",
                         "primary-fixed-dim": "#a3cddb",
                         "on-secondary": "#273140",
-                        "outline-variant": "#41484a",
+                        "outline-variant": "#a1a1a1",
                         "error-container": "#93000a",
                         "on-tertiary-fixed": "#2e1500",
                         "on-secondary-container": "#acb6c8",
@@ -210,7 +210,7 @@
             </div>
             <!-- Hero Image (right side, blended) -->
             <div
-                class="absolute right-[5%] top-1/2 -translate-y-1/2 w-[40%] h-[600px] z-[1] pointer-events-none hidden md:block">
+                class="absolute right-[5%] top-1/2 -translate-y-1/2 w-[48%] h-[720px] z-[1] pointer-events-none hidden md:block">
                 <div class="w-full h-full">
                     <img src="hero-vial3.png" alt="Research peptide vial"
                         class="w-full h-full object-contain object-center opacity-100 float-vial"
@@ -230,21 +230,21 @@
                         ADVANCED BIOTECH<br>
                         <span class="text-surface-variant">RESEARCH</span>
                     </h1>
-                    <p class="font-body-main text-body-main text-outline-variant max-w-lg">
+                    <p class="font-body-main text-body-main text-outline-variant max-w-lg backdrop-blur-sm px-4 py-2 -ml-4 inline-block" style="background-color: rgb(8, 9, 13);">
                         Laboratory grade research only. Providing high-purity peptides for in-vitro diagnostics and
                         analytical testing environments. Precision guaranteed.
                     </p>
                     <div class="flex flex-wrap items-center gap-6 mt-4">
-                        <button
+                        <a href="research-products.html"
                             class="bg-primary-container text-[#000000] font-button-text text-button-text px-8 py-4 hover:bg-primary-fixed transition-colors flex items-center gap-2">
                             SHOP PRODUCTS
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                        </button>
-                        <button
+                        </a>
+                        <a href="purity-analysis.html"
                             class="bg-transparent border border-primary-container text-primary-container font-button-text text-button-text px-8 py-4 hover:bg-primary-container/10 transition-colors flex items-center gap-2">
                             VIEW ANALYSIS
                             <span class="material-symbols-outlined text-[18px]">analytics</span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -257,13 +257,13 @@
                     <div>
                         <h2 class="font-hero-h1 text-[48px] text-white leading-none mb-4">FEATURED RESEARCH
                         </h2>
-                        <p class="font-label-mono text-label-mono text-outline-variant">LATEST PURITY BATCHES
+                        <p class="font-label-mono text-label-mono text-outline-variant backdrop-blur-sm px-3 py-1 inline-block" style="background-color: rgb(8, 9, 13);">LATEST PURITY BATCHES
                             AVAILABLE</p>
                     </div>
-                    <button
+                    <a href="research-products.html"
                         class="bg-transparent border border-white/20 text-white font-button-text text-button-text px-6 py-3 hover:border-primary-container hover:text-primary-container transition-colors flex items-center gap-2">
                         VIEW ALL CATALOG
-                    </button>
+                    </a>
                 </div>
                 <!-- Bento Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-grid-unit">
@@ -279,14 +279,14 @@
                         </div>
                         <div class="p-8 flex-grow flex flex-col justify-between gap-8">
                             <div>
-                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">BPC-157</h3>
-                                <p class="font-body-main text-body-main text-outline-variant line-clamp-2">Body
-                                    Protection Compound 157. Lyophilized powder for research purposes.</p>
+                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">RETATRUTIDE (AMERICAN) 30MG</h3>
+                                <p class="font-body-main text-body-main text-outline-variant line-clamp-2">Retatrutide (LY3437943). Lyophilized powder. For in-vitro and analytical research purposes.</p>
                             </div>
                             <div class="flex items-center justify-between mt-auto">
-                                <span class="font-nav-link text-[16px] text-white">$45.00</span>
-                                <button class="text-primary-container hover:text-white transition-colors">
-                                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                                <span class="font-body-main text-[16px] text-white">₹12,000</span>
+                                <button onclick="addToCart({id: 'retatrutide-american-30mg', name: 'RETATRUTIDE (AMERICAN) 30MG', price: 12000})" class="flex items-center gap-2 text-primary-container font-nav-link text-[10px] hover:text-white transition-colors border border-primary-container/20 px-3 py-1.5 bg-primary-container/5">
+                                    ADD TO CART
+                                    <span class="material-symbols-outlined text-[14px]">add_shopping_cart</span>
                                 </button>
                             </div>
                         </div>
@@ -303,14 +303,15 @@
                         </div>
                         <div class="p-8 flex-grow flex flex-col justify-between gap-8">
                             <div>
-                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">TB-500</h3>
+                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">GHK-CU 100MG</h3>
                                 <p class="font-body-main text-body-main text-outline-variant line-clamp-2">
-                                    Thymosin Beta-4 synthetic analog. Analyzed via HPLC for precision.</p>
+                                    GHK-Cu. Lyophilized powder. For in-vitro and analytical research purposes.</p>
                             </div>
                             <div class="flex items-center justify-between mt-auto">
-                                <span class="font-nav-link text-[16px] text-white">$55.00</span>
-                                <button class="text-primary-container hover:text-white transition-colors">
-                                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                                <span class="font-body-main text-[16px] text-white">₹5,000</span>
+                                <button onclick="addToCart({id: 'ghk-cu-100mg', name: 'GHK-CU 100MG', price: 5000})" class="flex items-center gap-2 text-primary-container font-nav-link text-[10px] hover:text-white transition-colors border border-primary-container/20 px-3 py-1.5 bg-primary-container/5">
+                                    ADD TO CART
+                                    <span class="material-symbols-outlined text-[14px]">add_shopping_cart</span>
                                 </button>
                             </div>
                         </div>
@@ -327,14 +328,15 @@
                         </div>
                         <div class="p-8 flex-grow flex flex-col justify-between gap-8">
                             <div>
-                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">CJC-1295</h3>
+                                <h3 class="font-hero-h1 text-[32px] text-white mb-2 leading-none">BPC-157 10MG</h3>
                                 <p class="font-body-main text-body-main text-outline-variant line-clamp-2">
-                                    Without DAC. Advanced sequence for comprehensive testing protocols.</p>
+                                    Pentadecapeptide BPC 157. Lyophilized powder. For in-vitro and analytical research purposes.</p>
                             </div>
                             <div class="flex items-center justify-between mt-auto">
-                                <span class="font-nav-link text-[16px] text-white">$42.00</span>
-                                <button class="text-primary-container hover:text-white transition-colors">
-                                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                                <span class="font-body-main text-[16px] text-white">₹4,900</span>
+                                <button onclick="addToCart({id: 'bpc-157-10mg', name: 'BPC-157 10MG', price: 4900})" class="flex items-center gap-2 text-primary-container font-nav-link text-[10px] hover:text-white transition-colors border border-primary-container/20 px-3 py-1.5 bg-primary-container/5">
+                                    ADD TO CART
+                                    <span class="material-symbols-outlined text-[14px]">add_shopping_cart</span>
                                 </button>
                             </div>
                         </div>

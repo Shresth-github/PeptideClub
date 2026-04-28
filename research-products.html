@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PEPTIDE CLUB - Research Products</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body {
+            background-color: #08090D;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.279) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(13, 16, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#add8e6",
+                        "on-background": "#e2e2e3",
+                        "outline-variant": "#a1a1a1",
+                        "surface-variant": "#333536",
+                    },
+                    "fontFamily": {
+                        "body-main": ["IBM Plex Sans"],
+                        "nav-link": ["Space Mono"],
+                        "hero-h1": ["Bebas Neue"],
+                        "label-mono": ["Space Mono"],
+                        "button-text": ["Space Mono"]
+                    },
+                    "spacing": {
+                        "header-height": "80px",
+                        "section-padding": "96px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                    },
+                    "fontSize": {
+                        "body-main": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "nav-link": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "hero-h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "normal", "fontWeight": "400" }],
+                        "label-mono": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "button-text": ["13px", { "lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="text-on-background font-body-main antialiased min-h-screen flex flex-col">
+    <!-- Master Navigation Bar -->
+    <script src="navbar.js"></script>
+
+    <main class="flex-grow pt-header-height flex flex-col">
+        <section class="py-12 md:py-24 px-margin-mobile md:px-margin-desktop relative z-10 flex-grow">
+            <div class="max-w-screen-xl mx-auto w-full">
+                
+                <!-- Header -->
+                <div class="mb-12 md:mb-16">
+                    <h1 class="font-hero-h1 text-[64px] text-white leading-none mb-4 uppercase">Research Catalog</h1>
+                    <p class="font-body-main text-outline-variant max-w-2xl text-lg backdrop-blur-sm px-4 py-2 -ml-4 inline-block" style="background-color: rgb(8, 9, 13);">
+                        Laboratory-grade research compounds. Strict third-party purity verification.
+                    </p>
+                </div>
+
+                <!-- Layout Container -->
+                <div class="flex flex-col gap-8 w-full">
+                    
+                    <!-- Search Bar -->
+                    <div class="w-full max-w-md">
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none text-[20px]">search</span>
+                            <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Search compounds..." class="w-full bg-[#08090D]/60 backdrop-blur-md border border-white/20 text-white font-mono text-[14px] pl-12 pr-4 py-4 focus:outline-none focus:border-primary-container transition-colors rounded-sm placeholder:text-white/30">
+                        </div>
+                    </div>
+
+                    <!-- Main Content (Product Grid) -->
+                    <div class="flex-grow w-full">
+                        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                            <!-- Products will be injected here via JavaScript -->
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Master Footer -->
+    <script src="footer.js"></script>
+
+    <script>
+        // Data format designed to easily match a backend database schema
+        const rawCatalog = [
+            {
+              "category": "Weight Management",
+              "products": [
+                { "name": "Retatrutide (American)", "dose": "30mg", "price_inr": 12000 },
+                { "name": "Retatrutide (Chinese)", "dose": "30mg", "price_inr": 8000 },
+                { "name": "Retatrutide (Chinese)", "dose": "10mg", "price_inr": 5000 },
+                { "name": "KLOW", "dose": "80mg", "price_inr": 8000 }
+              ]
+            },
+            {
+              "category": "Hormone Support",
+              "products": [
+                { "name": "Tesamorelin", "dose": "5mg", "price_inr": 4500 },
+                { "name": "Tesamorelin", "dose": "10mg", "price_inr": 6000 },
+                { "name": "Ipamorelin", "dose": "10mg", "price_inr": 4000 },
+                { "name": "CJC-1295 (No DAC)", "dose": "5mg", "price_inr": 4000 },
+                { "name": "CJC-1295 (No DAC)", "dose": "10mg", "price_inr": 7000 }
+              ]
+            },
+            {
+              "category": "Recovery / Healing",
+              "products": [
+                { "name": "TB-500", "dose": "10mg", "price_inr": 6000 },
+                { "name": "BPC-157", "dose": "10mg", "price_inr": 4900 },
+                { "name": "KPV", "dose": "10mg", "price_inr": 5000 }
+              ]
+            },
+            {
+              "category": "Anti-Aging / Skin",
+              "products": [
+                { "name": "GHK-Cu", "dose": "100mg", "price_inr": 5000 },
+                { "name": "GHK-Cu", "dose": "50mg", "price_inr": 3800 },
+                { "name": "Epithalon", "dose": "10mg", "price_inr": 4000 }
+              ]
+            },
+            {
+              "category": "Metabolic / Performance",
+              "products": [
+                { "name": "MOTS-C", "dose": "10mg", "price_inr": 3000 },
+                { "name": "MOTS-C", "dose": "40mg", "price_inr": 9000 },
+                { "name": "SLU-PP-332", "dose": "5mg", "price_inr": 3500 }
+              ]
+            },
+            {
+              "category": "Nootropics",
+              "products": [
+                { "name": "Semax", "dose": "10mg", "price_inr": 5000 },
+                { "name": "Selank", "dose": "10mg", "price_inr": 5000 }
+              ]
+            },
+            {
+              "category": "Accessories",
+              "products": [
+                { "name": "BAC Water (Imported)", "dose": "10ml", "price_inr": 1000 },
+                { "name": "BAC Water (Imported)", "dose": "3ml", "price_inr": 500 },
+                { "name": "BAC Indian Ampule", "dose": "10ml", "price_inr": 200 }
+              ]
+            }
+        ];
+
+        let productsData = [];
+        
+        rawCatalog.forEach(cat => {
+            cat.products.forEach(p => {
+                productsData.push({
+                    id: p.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase() + '-' + p.dose,
+                    name: `${p.name} ${p.dose}`,
+                    chemicalName: p.name,
+                    category: cat.category,
+                    type: cat.category === "Accessories" ? "Solution / Accessory" : "Lyophilized powder",
+                    purity: 99.0,
+                    price: `₹${p.price_inr.toLocaleString('en-IN')}`,
+                    image: "", // Leave blank to hide image, or add path here
+                    inStock: true
+                });
+            });
+        });
+
+        // Pre-sort the master data array based on user requirements
+        const priority = ["Retatrutide", "GHK-Cu", "BPC-157", "TB-500"];
+        productsData.sort((a, b) => {
+            let indexA = priority.findIndex(p => a.name.toLowerCase().includes(p.toLowerCase()));
+            let indexB = priority.findIndex(p => b.name.toLowerCase().includes(p.toLowerCase()));
+            if (indexA === -1 && indexB === -1) return 0;
+            if (indexA !== -1 && indexB === -1) return -1;
+            if (indexA === -1 && indexB !== -1) return 1;
+            return indexA - indexB;
+        });
+
+        let searchQuery = '';
+
+        function handleSearch() {
+            searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
+            renderProducts();
+        }
+
+
+
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            // Apply search filtering
+            let displayedProducts = [...productsData];
+            
+            if (searchQuery) {
+                displayedProducts = displayedProducts.filter(p => 
+                    p.name.toLowerCase().includes(searchQuery) || 
+                    p.chemicalName.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (displayedProducts.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-16 text-white/50 font-mono text-[14px]">No compounds found matching your search.</div>';
+                return;
+            }
+
+            displayedProducts.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "glass-panel group relative flex flex-col h-full hover:border-primary-container/40 transition-colors overflow-hidden rounded-sm cursor-pointer";
+                
+                const outOfStockOverlay = !p.inStock 
+                    ? `<div class="absolute inset-0 bg-[#08090D]/60 z-10 flex items-center justify-center backdrop-blur-[1px]"><span class="bg-red-900/80 text-red-100 font-label-mono text-[10px] px-3 py-1 uppercase tracking-widest border border-red-500/30">Out of Stock</span></div>` 
+                    : '';
+                
+                const buttonHTML = p.inStock
+                    ? `<button onclick="addToCart({id: '${p.id}', name: '${p.name.replace(/'/g, "\\'")}', price: ${parseInt(p.price.replace(/[^\d]/g, ''))}})" class="w-full border border-white/20 bg-transparent text-white font-button-text text-[12px] py-3 uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary-container hover:text-[#08090D] hover:border-primary-container transition-all">Add to Cart <span class="material-symbols-outlined text-[16px]">shopping_cart</span></button>`
+                    : `<button class="w-full border border-white/10 bg-white/5 text-white/50 font-button-text text-[12px] py-3 uppercase tracking-widest flex items-center justify-center gap-2 cursor-not-allowed" disabled>Out of Stock</button>`;
+
+                const imageHTML = p.image 
+                    ? `<img src="${p.image}" alt="${p.name}" class="h-full object-contain transition-transform duration-700 group-hover:scale-105 ${!p.inStock ? 'opacity-40 grayscale' : ''}">`
+                    : `<div class="w-full h-full flex flex-col items-center justify-center text-white/10 group-hover:text-white/20 transition-colors"><span class="material-symbols-outlined text-[48px]">science</span></div>`;
+
+                card.innerHTML = `
+                    <!-- Image Area -->
+                    <div class="h-40 md:h-56 w-full relative bg-white/5 flex items-center justify-center p-4 border-b border-white/10">
+                        ${outOfStockOverlay}
+                        ${imageHTML}
+                        
+                        <!-- Purity Badge -->
+                        <div class="absolute top-3 right-3 bg-[#08090D]/80 backdrop-blur-md border border-primary-container/30 text-primary-container font-label-mono text-[10px] px-2 py-1 flex items-center gap-1.5 z-20 rounded-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary-container shadow-[0_0_5px_rgba(173,216,230,0.8)]"></span>
+                            ${p.purity > 90 ? '>99%' : p.purity + '%'}
+                        </div>
+                    </div>
+                    
+                    <!-- Content Area -->
+                    <div class="p-4 md:p-6 flex flex-col flex-grow">
+                        <h3 class="font-hero-h1 text-white text-[20px] md:text-[24px] leading-none mb-1 uppercase tracking-wide">${p.name}</h3>
+                        <div class="text-primary-container font-mono text-[16px] md:text-lg mb-4 font-bold">${p.price}</div>
+                        
+                        <!-- Exact Copy Formula -->
+                        <div class="font-label-mono text-white/40 text-[9px] md:text-[10px] leading-relaxed uppercase tracking-wider mb-6 flex-grow">
+                            <p class="mb-2">${p.chemicalName}. ${p.type}.</p>
+                            <p>For in-vitro and analytical research purposes.</p>
+                        </div>
+                        
+                        <!-- Action -->
+                        ${buttonHTML}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initialize
+        renderProducts();
+    </script>
+</body>
+</html>

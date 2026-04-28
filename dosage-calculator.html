@@ -67,7 +67,7 @@
                     "colors": {
                         "primary-container": "#add8e6",
                         "on-background": "#e2e2e3",
-                        "outline-variant": "#41484a",
+                        "outline-variant": "#a1a1a1",
                         "surface-variant": "#333536",
                     },
                     "fontFamily": {
@@ -103,7 +103,7 @@
 
     <main class="flex-grow pt-header-height flex flex-col">
         <section class="py-section-padding px-margin-mobile md:px-margin-desktop relative z-10 flex-grow">
-            <div class="max-w-screen-xl mx-auto w-full">
+            <div class="max-w-4xl mx-auto w-full">
                 <!-- Title & Subtitle -->
                 <div class="text-center mb-12">
                     <div class="glass-panel px-4 py-2 inline-flex items-center gap-2 mb-6 rounded-sm">
@@ -111,75 +111,70 @@
                         <span class="font-label-mono text-[11px] text-primary-container">PRECISION TOOL</span>
                     </div>
                     <h1 class="font-hero-h1 text-[64px] text-white leading-none mb-4 uppercase">Dosage Calculator</h1>
-                    <p class="font-body-main text-outline-variant max-w-lg mx-auto">
-                        Determine the exact syringe measurement for your required peptide dose.
+                    <p class="font-body-main text-outline-variant max-w-lg mx-auto backdrop-blur-sm px-4 py-2 inline-block" style="background-color: rgb(8, 9, 13);">
+                        Precise titration modeling for research protocols. Calculate your research compound concentrations with laboratory accuracy.
                     </p>
                 </div>
 
                 <!-- Calculator Form -->
                 <div class="glass-panel p-8 md:p-12">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div class="flex flex-col gap-10 max-w-lg mx-auto">
                         
-                        <!-- Left Column -->
-                        <div class="flex flex-col gap-10">
-                            <!-- Desired Dose -->
-                            <div>
-                                <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-primary-container text-sm">target</span>
-                                    Desired Dose
-                                </label>
-                                <div class="grid grid-cols-3 gap-3 mb-3" id="dose-group">
-                                    <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setDose(500, 'mcg', this)">500 mcg</button>
-                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setDose(1, 'mg', this)">1 mg</button>
-                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setDose(2, 'mg', this)">2 mg</button>
-                                </div>
-                                <div class="flex gap-2 w-full mt-2">
-                                    <input type="number" id="custom-dose" placeholder="Custom..." class="flex-grow px-5 py-4 font-mono text-sm tracking-wider" oninput="setCustomDose()">
-                                    <select id="custom-dose-unit" class="w-24 px-4 py-4 font-mono text-sm" onchange="setCustomDose()">
-                                        <option value="mcg">mcg</option>
-                                        <option value="mg">mg</option>
-                                    </select>
-                                </div>
+                        <!-- Desired Dose -->
+                        <div class="flex flex-col justify-start">
+                            <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary-container text-sm">target</span>
+                                Desired Dose
+                            </label>
+                            <div class="grid grid-cols-3 gap-3 mb-3" id="dose-group">
+                                <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setDose(500, 'mcg', this)">500 mcg</button>
+                                <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setDose(1, 'mg', this)">1 mg</button>
+                                <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setDose(2, 'mg', this)">2 mg</button>
+                            </div>
+                            <div class="flex gap-2 w-full mt-2">
+                                <input type="number" id="custom-dose" placeholder="Custom..." class="flex-grow px-5 py-4 font-mono text-sm tracking-wider" oninput="setCustomDose()">
+                                <select id="custom-dose-unit" class="w-24 px-4 py-4 font-mono text-sm" onchange="setCustomDose()">
+                                    <option value="mcg">mcg</option>
+                                    <option value="mg">mg</option>
+                                </select>
                             </div>
                         </div>
 
-                        <!-- Right Column -->
-                        <div class="flex flex-col gap-10">
-                            <!-- Peptide Vial Quantity -->
-                            <div>
-                                <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-primary-container text-sm">science</span>
-                                    Peptide Vial Quantity
-                                </label>
-                                <div class="grid grid-cols-3 gap-3 mb-3" id="peptide-group">
-                                    <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setPeptide(5, this)">5 mg</button>
-                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setPeptide(10, this)">10 mg</button>
-                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setPeptide(15, this)">15 mg</button>
-                                </div>
-                                <input type="number" id="custom-peptide" placeholder="Or enter custom mg..." class="w-full px-5 py-4 font-mono text-sm tracking-wider" oninput="setCustomPeptide(this.value)">
+                        <!-- Peptide Vial Quantity -->
+                        <div class="flex flex-col justify-start">
+                            <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary-container text-sm">science</span>
+                                Peptide Vial Quantity
+                            </label>
+                            <div class="grid grid-cols-3 gap-3 mb-3" id="peptide-group">
+                                <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setPeptide(5, this)">5 mg</button>
+                                <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setPeptide(10, this)">10 mg</button>
+                                <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setPeptide(15, this)">15 mg</button>
                             </div>
-
-                            <!-- Bacteriostatic Water -->
-                            <div>
-                                <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-primary-container text-sm">water_drop</span>
-                                    Bacteriostatic Water Added
-                                </label>
-                                <div class="grid grid-cols-4 gap-3 mb-3" id="water-group">
-                                    <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setWater(1, this)">1 ml</button>
-                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(2, this)">2 ml</button>
-                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(3, this)">3 ml</button>
-                                    <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(5, this)">5 ml</button>
-                                </div>
-                                <input type="number" step="0.1" id="custom-water" placeholder="Or enter custom ml..." class="w-full px-5 py-4 font-mono text-sm tracking-wider" oninput="setCustomWater(this.value)">
-                            </div>
+                            <input type="number" id="custom-peptide" placeholder="Or enter custom mg..." class="w-full px-5 py-4 font-mono text-sm tracking-wider mt-2" oninput="setCustomPeptide(this.value)">
                         </div>
+
+                        <!-- Bacteriostatic Water -->
+                        <div class="flex flex-col justify-start">
+                            <label class="block font-label-mono text-white/80 mb-4 tracking-wider uppercase text-[12px] flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary-container text-sm">water_drop</span>
+                                Bacteriostatic Water Added
+                            </label>
+                            <div class="grid grid-cols-4 gap-3 mb-3" id="water-group">
+                                <button class="btn-3d active py-3 rounded-sm font-mono text-sm" onclick="setWater(1, this)">1 ml</button>
+                                <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(2, this)">2 ml</button>
+                                <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(3, this)">3 ml</button>
+                                <button class="btn-3d py-3 rounded-sm font-mono text-sm" onclick="setWater(5, this)">5 ml</button>
+                            </div>
+                            <input type="number" step="0.1" id="custom-water" placeholder="Or enter custom ml..." class="w-full px-5 py-4 font-mono text-sm tracking-wider mt-2" oninput="setCustomWater(this.value)">
+                        </div>
+                        
                     </div>
 
                     <!-- Result Section -->
                     <div class="mt-16 pt-12 border-t border-white/10 text-center">
-                        <h2 class="text-2xl md:text-3xl font-body-main text-white mb-10">
-                            To have a dose of <span id="display-dose" class="text-primary-container font-bold px-1">50 mcg</span> pull the syringe to <span id="display-units" class="text-primary-container font-bold text-4xl ml-2">1</span>
+                        <h2 class="text-2xl md:text-3xl font-body-main text-white mb-10 flex flex-wrap items-center justify-center gap-2">
+                            To have a dose of <span id="display-dose" class="text-primary-container font-bold">500 mcg</span> pull the syringe to <span id="display-units" class="text-primary-container font-bold text-4xl">1</span>
                         </h2>
                         
                         <!-- Visual Syringe -->

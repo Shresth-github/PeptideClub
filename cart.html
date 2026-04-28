@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>CART - PEPTIDE CLUB</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body {
+            background-color: #08090D;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.279) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(13, 16, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .checkout-modal.active {
+            display: flex;
+        }
+        input::placeholder { color: rgba(255, 255, 255, 0.3); }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#add8e6",
+                        "on-background": "#e2e2e3",
+                        "outline-variant": "#a1a1a1",
+                        "surface-variant": "#333536",
+                    },
+                    "fontFamily": {
+                        "body-main": ["IBM Plex Sans"],
+                        "nav-link": ["Space Mono"],
+                        "hero-h1": ["Bebas Neue"],
+                        "label-mono": ["Space Mono"],
+                        "button-text": ["Space Mono"]
+                    },
+                    "spacing": {
+                        "header-height": "80px",
+                        "section-padding": "96px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                    },
+                    "fontSize": {
+                        "body-main": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "nav-link": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "hero-h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "normal", "fontWeight": "400" }],
+                        "label-mono": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "button-text": ["13px", { "lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="text-on-background font-body-main antialiased min-h-screen flex flex-col">
+    <script src="navbar.js"></script>
+
+    <main class="flex-grow pt-header-height flex flex-col">
+        <section class="py-12 md:py-24 px-margin-mobile md:px-margin-desktop relative z-10 flex-grow">
+            <div class="max-w-4xl mx-auto w-full">
+                
+                <div class="mb-12">
+                    <h1 class="font-hero-h1 text-[64px] text-white leading-none mb-4 uppercase">YOUR CART</h1>
+                    <p class="font-body-main text-outline-variant text-lg backdrop-blur-sm px-4 py-2 -ml-4 inline-block" style="background-color: rgb(8, 9, 13);">
+                        Review your research compounds before finalizing procurement.
+                    </p>
+                </div>
+
+                <!-- Cart Content -->
+                <div id="cart-container" class="space-y-6">
+                    <!-- Cart items will be injected here -->
+                </div>
+
+                <!-- Summary Section -->
+                <div id="cart-summary" class="mt-12 hidden">
+                    <div class="glass-panel p-8">
+                        <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-6">
+                            <span class="font-hero-h1 text-[24px] text-white uppercase">SUBTOTAL</span>
+                            <span id="cart-total" class="font-hero-h1 text-[32px] text-primary-container">₹0</span>
+                        </div>
+                        <button onclick="openCheckout()" class="w-full bg-primary-container text-[#08090D] font-button-text text-button-text py-4 uppercase tracking-widest hover:bg-white transition-all flex items-center justify-center gap-2">
+                            PROCEED TO CHECKOUT
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="checkout-modal">
+        <div class="glass-panel w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 md:p-12 relative">
+            <button onclick="closeCheckout()" class="absolute top-6 right-6 text-white/40 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+
+            <h2 class="font-hero-h1 text-[40px] text-white mb-8 uppercase leading-none">CHECKOUT</h2>
+
+            <form onsubmit="handleOrder(event)" class="space-y-10">
+                <!-- Contact -->
+                <div>
+                    <h3 class="font-hero-h1 text-[24px] text-white mb-4 uppercase border-l-2 border-primary-container pl-4">Contact</h3>
+                    <div class="space-y-4">
+                        <input type="email" placeholder="Email" required class="w-full bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none transition-all rounded-sm">
+                        <label class="flex items-center gap-3 text-white/60 text-sm cursor-pointer select-none">
+                            <input type="checkbox" checked class="w-4 h-4 rounded-sm bg-white/10 border-white/20 text-primary-container focus:ring-0">
+                            Email me with news and offers
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Delivery -->
+                <div>
+                    <h3 class="font-hero-h1 text-[24px] text-white mb-4 uppercase border-l-2 border-primary-container pl-4">Delivery</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-[10px] text-white/40 uppercase mb-1 font-mono tracking-widest pl-1">Country/Region</label>
+                            <input type="text" value="India" readonly class="w-full bg-white/5 border border-white/20 text-white p-4 outline-none rounded-sm">
+                        </div>
+                        <input type="text" placeholder="First name" required class="bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm">
+                        <input type="text" placeholder="Last name" required class="bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm">
+                        <input type="text" placeholder="Address" required class="md:col-span-2 bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm">
+                        <input type="text" placeholder="Apartment, suite, etc. (optional)" class="md:col-span-2 bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm">
+                        <input type="text" placeholder="City" required class="bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm">
+                        <select required class="bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm appearance-none">
+                            <option value="" disabled selected class="bg-[#08090D]">State</option>
+                            <option value="Delhi" class="bg-[#08090D]">Delhi</option>
+                            <option value="Maharashtra" class="bg-[#08090D]">Maharashtra</option>
+                            <option value="Karnataka" class="bg-[#08090D]">Karnataka</option>
+                        </select>
+                        <input type="text" placeholder="PIN code" required class="bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm">
+                        <input type="tel" placeholder="Phone" required class="bg-white/5 border border-white/20 text-white p-4 focus:border-primary-container outline-none rounded-sm md:col-span-2">
+                    </div>
+                </div>
+
+                <!-- Legal Box -->
+                <div class="bg-primary-container/5 border border-primary-container/20 p-6 rounded-sm">
+                    <label class="flex items-start gap-4 cursor-pointer group">
+                        <input type="checkbox" required class="mt-1 w-5 h-5 rounded-sm bg-white/10 border-white/20 text-primary-container focus:ring-0">
+                        <div class="text-sm">
+                            <span class="text-white font-bold group-hover:text-primary-container transition-colors uppercase tracking-tight">Research Purposes Only <span class="text-red-500">*</span></span>
+                            <p class="text-white/60 leading-relaxed mt-2 text-[12px]">I agree that all products are intended strictly for laboratory research purposes only and are not intended for human consumption, medical use, or diagnostic purposes. I have read and agree to the <a href="#" class="text-primary-container underline">FDA Disclosure</a>.</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="space-y-4 pt-4 border-t border-white/10">
+                    <label class="flex items-center gap-3 text-white/60 text-sm cursor-pointer">
+                        <input type="checkbox" class="w-4 h-4 rounded-sm bg-white/10 border-white/20 text-primary-container focus:ring-0">
+                        Save this information for next time
+                    </label>
+                    <label class="flex items-center gap-3 text-white/60 text-sm cursor-pointer">
+                        <input type="checkbox" class="w-4 h-4 rounded-sm bg-white/10 border-white/20 text-primary-container focus:ring-0">
+                        Text me with news and offers
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-primary-container text-[#08090D] font-button-text text-button-text py-5 uppercase tracking-[0.2em] hover:bg-white transition-all shadow-[0_0_20px_rgba(173,216,230,0.2)]">
+                    PLACE RESEARCH ORDER
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="footer.js"></script>
+
+    <script>
+        let cartItems = [];
+
+        function loadCart() {
+            cartItems = JSON.parse(localStorage.getItem('peptide_cart') || '[]');
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            const summary = document.getElementById('cart-summary');
+            const totalDisplay = document.getElementById('cart-total');
+            
+            if (cartItems.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-panel p-8 text-center py-20">
+                        <span class="material-symbols-outlined text-[48px] text-white/10 mb-4">shopping_cart</span>
+                        <p class="text-white/40 font-mono">Your cart is currently empty.</p>
+                        <a href="research-products.html" class="mt-6 inline-block text-primary-container hover:underline font-nav-link text-nav-link uppercase tracking-widest">Browse Catalog</a>
+                    </div>
+                `;
+                summary.classList.add('hidden');
+                return;
+            }
+
+            container.innerHTML = cartItems.map((item, idx) => `
+                <div class="glass-panel p-6 flex flex-col md:flex-row items-center gap-8 group">
+                    <div class="w-20 h-20 bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-primary-container/30 transition-colors">
+                        <span class="material-symbols-outlined text-white/20 text-[32px]">science</span>
+                    </div>
+                    <div class="flex-grow text-center md:text-left">
+                        <h3 class="font-hero-h1 text-[24px] text-white uppercase leading-tight">${item.name}</h3>
+                        <p class="font-label-mono text-[10px] text-white/40 uppercase tracking-widest">Analytical Reference Compound</p>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="flex items-center border border-white/20 h-10 px-2 rounded-sm">
+                            <button onclick="updateQty(${idx}, -1)" class="px-2 text-white/60 hover:text-white">-</button>
+                            <span class="px-4 text-white font-mono text-sm">${item.quantity}</span>
+                            <button onclick="updateQty(${idx}, 1)" class="px-2 text-white/60 hover:text-white">+</button>
+                        </div>
+                        <div class="font-hero-h1 text-[24px] text-white w-32 text-right">₹${(item.price * item.quantity).toLocaleString('en-IN')}</div>
+                        <button onclick="removeItem(${idx})" class="text-white/20 hover:text-red-400 transition-colors">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            summary.classList.remove('hidden');
+            const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            totalDisplay.innerText = `₹${subtotal.toLocaleString('en-IN')}`;
+        }
+
+        function updateQty(idx, delta) {
+            cartItems[idx].quantity = Math.max(1, cartItems[idx].quantity + delta);
+            saveCart();
+            renderCart();
+        }
+
+        function removeItem(idx) {
+            cartItems.splice(idx, 1);
+            saveCart();
+            renderCart();
+        }
+
+        function saveCart() {
+            localStorage.setItem('peptide_cart', JSON.stringify(cartItems));
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function openCheckout() {
+            document.getElementById('checkout-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function handleOrder(e) {
+            e.preventDefault();
+            alert('Research Order Request Submitted. An analyst will verify your credentials shortly.');
+            localStorage.removeItem('peptide_cart');
+            window.dispatchEvent(new Event('storage'));
+            location.reload();
+        }
+
+        // Initialize
+        loadCart();
+        if (window.location.search.includes('checkout=true')) {
+            openCheckout();
+        }
+    </script>
+</body>
+</html>
