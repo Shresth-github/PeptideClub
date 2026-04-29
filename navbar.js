@@ -147,6 +147,26 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.body.appendChild(checkoutModal);
 
+    // Close on outside click
+    checkoutModal.addEventListener('click', (e) => {
+        if (e.target === checkoutModal) {
+            closeGlobalCheckout();
+        }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('global-checkout-modal');
+            if (modal && !modal.classList.contains('hidden')) {
+                closeGlobalCheckout();
+            }
+            const sidebar = document.getElementById('cart-sidebar');
+            if (sidebar && !sidebar.classList.contains('translate-x-full')) {
+                toggleCartSidebar();
+            }
+        }
+    });
     // Set active state based on current filename
     const path = window.location.pathname;
     const currentPage = path.split('/').pop() || 'index.html';
@@ -353,6 +373,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sidebar && !sidebar.classList.contains('translate-x-full')) {
             renderSidebarCart();
         }
+
+        // Update individual product badges
+        document.querySelectorAll('[id^="qty-badge-"]').forEach(badge => {
+            badge.classList.add('hidden');
+            badge.innerText = '0';
+        });
+        cartItems.forEach(item => {
+            const badge = document.getElementById(`qty-badge-${item.id}`);
+            if (badge) {
+                badge.innerText = item.quantity;
+                badge.classList.remove('hidden');
+            }
+        });
     };
     updateGlobalCartCounter();
     window.addEventListener('storage', updateGlobalCartCounter);

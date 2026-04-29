@@ -282,6 +282,21 @@
             location.reload();
         }
 
+        document.getElementById('checkout-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'checkout-modal') {
+                closeCheckout();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('checkout-modal');
+                if (modal && modal.classList.contains('active')) {
+                    closeCheckout();
+                }
+            }
+        });
+
         // Initialize
         loadCart();
         if (window.location.search.includes('checkout=true')) {
