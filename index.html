@@ -373,6 +373,12 @@
             const scrollPrompt = document.getElementById('scroll-prompt');
             const disclaimerModal = document.getElementById('entry-disclaimer');
 
+            // Check if disclaimer was already accepted
+            if (localStorage.getItem('disclaimerAccepted') === 'true') {
+                disclaimerModal.style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+            }
+
             // Handle scroll logic
             scrollArea.addEventListener('scroll', () => {
                 const scrollPercentage = (scrollArea.scrollTop + scrollArea.clientHeight) / scrollArea.scrollHeight;
@@ -392,6 +398,9 @@
             // Handle accept
             acceptBtn.addEventListener('click', () => {
                 if (!acceptBtn.disabled) {
+                    // Save acceptance to localStorage
+                    localStorage.setItem('disclaimerAccepted', 'true');
+                    
                     disclaimerModal.style.opacity = '0';
                     disclaimerModal.style.transition = 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
                     document.body.classList.remove('overflow-hidden');
